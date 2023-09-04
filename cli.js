@@ -32,7 +32,7 @@ const questions = [
             {
                 name: `Send me an ${chalk.green.bold("email")}?`,
                 value: () => {
-                    open("mailto:tasmirolislam@gmail.com");
+                    open("https://mail.google.com/mail/?view=cm&fs=1&to=tasmirolislam@gmail.com&body=Dear+Tajmirul+Islam,");
                     console.log("tasmirolislam@gmail.com")
                     console.log("\nDone, see you soon at inbox.\n");
                 }
