@@ -1,0 +1,39 @@
+{
+  "name": "tajmirul",
+  "type": "module",
+  "version": "2.1.0",
+  "description": "A personal card for tajmirul (@tajmirul)",
+  "main": "cli.js",
+  "bin": {
+    "tajmirul": "cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tajmirul/npx_card.git"
+  },
+  "scripts": {
+    "test": "node cli.js"
+  },
+  "dependencies": {
+    "boxen": "^4.2.0",
+    "chalk": "^4.1.0",
+    "clear": "^0.1.0",
+    "cli-spinners": "^2.5.0",
+    "inquirer": "^7.3.2",
+    "open": "^7.0.4",
+    "ora": "^5.1.0",
+    "request": "^2.88.2",
+    "terminal-image": "^2.0.0",
+    "terminal-link": "^3.0.0"
+  },
+  "keywords": [
+    "card",
+    "npm",
+    "npm card",
+    "npx",
+    "npx card",
+    "business card"
+  ],
+  "author": "Tajmirul <tasmirolislam@gmail.com> (https://me.toinfinite.dev/)",
+  "license": "ISC"
+}
