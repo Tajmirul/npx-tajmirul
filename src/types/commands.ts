@@ -1,0 +1,15 @@
+export type Commands =
+    | 'help'
+    | 'exit'
+    | 'clear'
+    | 'echo'
+    | 'history'
+    | 'whoami'
+    | 'gui'
+    | 'about'
+    | 'education'
+    | 'experience'
+    | 'skills'
+    | 'projects'
+    | 'contact'
+    | 'resume';
