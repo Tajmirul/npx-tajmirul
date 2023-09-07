@@ -1,4 +1,5 @@
 export type Commands =
+    | 'welcome'
     | 'help'
     | 'exit'
     | 'clear'
@@ -12,4 +13,5 @@ export type Commands =
     | 'skills'
     | 'projects'
     | 'contact'
+    | 'email'
     | 'resume';

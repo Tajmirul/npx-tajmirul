@@ -1,9 +1,12 @@
 import chalk from 'chalk';
 import { Commands } from '../types/commands';
 import { Resume } from '../types/resume';
+import art from 'ascii-art';
 import { getResume } from './actions/getResume';
+import open from 'open';
 
 export const commands: Commands[] = [
+    'welcome',
     'help',
     'exit',
     'clear',
@@ -16,6 +19,7 @@ export const commands: Commands[] = [
     'skills',
     'projects',
     'contact',
+    'email',
     'resume',
 ];
 
@@ -29,25 +33,67 @@ export const commandDetails: {
         action?: (arg?: string[]) => void;
     };
 } = {
+    welcome: {
+        description: 'Welcome message',
+        usage: 'welcome',
+        example: 'welcome',
+        action: async () => {
+            const name = `
+            _______    _           _            _   _____     _                 
+            |__   __|  (_)         (_)          | | |_   _|   | |                
+               | | __ _ _ _ __ ___  _ _ __ _   _| |   | |  ___| | __ _ _ __ ___  
+               | |/ _" | | '_ ' _ \| | '__| | | | |   | | / __| |/ _' | '_ ' _ \ 
+               | | (_| | | | | | | | | |  | |_| | |  _| |_\__ \ | (_| | | | | | |
+               |_|\__,_| |_| |_| |_|_|_|   \__,_|_| |_____|___/_|\__,_|_| |_| |_|
+                      _/ |                                                       
+                     |__/                                                        
+            `;
+            console.log(name);
+            const text = [
+                `Welcome to my terminal Portfolio! version 1.0.0`,
+                `For a list of available commands type ${chalk.greenBright.bold(
+                    'help',
+                )}`,
+            ].join('\n');
+
+            console.log(text);
+        },
+    },
     help: {
         description: 'List available commands',
         usage: 'help',
         example: 'help',
         action: async () => {
+            const longestCommand = commands.reduce((a, b) =>
+                a.length > b.length ? a : b,
+            );
+
+            const generateSpaces = (command: string) => {
+                return ' '.repeat(longestCommand.length - command.length);
+            };
+
             const commandsWithHelpText = Object.keys(commandDetails)
                 .map((commandName) => {
                     const commandDetail =
                         commandDetails[commandName as Commands];
 
-                    return `${chalk.hex('#05ce91').bold(commandName)} - ${
+                    return `${chalk
+                        .hex('#05ce91')
+                        .bold(commandName)} ${generateSpaces(commandName)} - ${
                         commandDetail.description
                     }`;
                 })
                 .join('\n');
 
-            const helpText = [`Available commands:`, commandsWithHelpText].join(
-                '\n',
-            );
+            const helpText = [
+                `Available commands:`,
+                commandsWithHelpText,
+                ``,
+                `Press ${chalk
+                    .hex('#05ce91')
+                    .bold('tab')} to autocomplete commands.`,
+                `Up/down arrow keys to navigate command history.`,
+            ].join('\n');
 
             console.log(helpText);
         },
@@ -62,9 +108,7 @@ export const commandDetails: {
         description: 'Clear the terminal',
         usage: 'clear',
         example: 'clear',
-        action: async () => {
-            console.clear();
-        },
+        action: async () => console.clear(),
     },
     echo: {
         description: 'Print a string to the terminal',
@@ -75,7 +119,7 @@ export const commandDetails: {
         },
     },
     history: {
-        description: 'Print the command history',
+        description: 'See command history',
         usage: 'history',
         example: 'history',
         action: async () => {
@@ -91,7 +135,7 @@ export const commandDetails: {
         },
     },
     gui: {
-        description: 'Print information about my gui',
+        description: 'Visit my website',
         usage: 'gui',
         example: 'gui',
         action: async () => {
@@ -100,26 +144,43 @@ export const commandDetails: {
         },
     },
     about: {
-        description: 'Print information about me',
+        description: 'Know more about me',
         usage: 'about',
         example: 'about',
         action: async () => {
-            console.log('I am a software engineer');
+            const aboutText = [
+                `I'm ${chalk.greenBright.bold(
+                    'Tajmirul Islam',
+                )}, a ${chalk.bold('Front End Developer')} from `,
+                `Dhaka, Bangladesh. I love coding, especially when `,
+                `I'm part of a team. My focus is on writing fast `,
+                `and clean code, making websites work better. I enjoy `,
+                `learning and solving problems. Currently, I'm `,
+                `working at AnchorBlock Technology, building `,
+                `websites with React and Next. Before that, I was `,
+                `at Branex IT, where I worked on various projects `,
+                `using HTML, CSS, JavaScript, and more. You can `,
+                `check out my portfolio to see some of my work. `,
+                ``,
+                `Let's connect on GitHub or LinkedIn!`,
+            ].join('\n');
+
+            console.log(aboutText);
         },
     },
     education: {
-        description: 'Print information about my education',
+        description: 'My education background',
         usage: 'education',
         example: 'education',
         action: async () => {
-            const resume = await getResume();
-            return resume.filter(
+            const allResumes = await getResume();
+            const education = allResumes.filter(
                 (item: Resume) => item.category === 'education',
             );
         },
     },
     experience: {
-        description: 'Print information about my experience',
+        description: 'Experience i have gathered so far',
         usage: 'experience',
         example: 'experience',
         action: async () => {
@@ -128,7 +189,7 @@ export const commandDetails: {
         },
     },
     skills: {
-        description: 'Print information about my skills',
+        description: 'My skills',
         usage: 'skills',
         example: 'skills',
         action: async () => {
@@ -136,7 +197,7 @@ export const commandDetails: {
         },
     },
     projects: {
-        description: 'Print information about my projects',
+        description: 'View my projects',
         usage: 'projects',
         example: 'projects',
         action: async () => {
@@ -144,15 +205,27 @@ export const commandDetails: {
         },
     },
     contact: {
-        description: 'Print information about how to contact me',
+        description: 'Contact Information',
         usage: 'contact',
         example: 'contact',
         action: async () => {
             console.log('print contact information');
         },
     },
+    email: {
+        description: 'Send me an email',
+        usage: 'email',
+        example: 'email',
+        action: async () => {
+            open(
+                'https://mail.google.com/mail/?view=cm&fs=1&to=tasmirolislam@gmail.com&body=Dear+Tajmirul+Islam,',
+            );
+            console.log('tasmirolislam@gmail.com');
+            console.log('\nDone, see you soon at inbox.\n');
+        },
+    },
     resume: {
-        description: 'Print information about my resume',
+        description: 'Want to see my resume?',
         usage: 'resume',
         example: 'resume',
         action: async () => {

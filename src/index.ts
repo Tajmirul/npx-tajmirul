@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { commandDetails, commandHistory } from './utility/commands';
-import { input } from './utility/input';
+import { input, rl } from './utility/input';
 
 console.clear();
 
@@ -17,26 +17,25 @@ const runCommand = async (
     await commandDetail.action(args);
 };
 
-const handler =
+export const handler =
     chalk.hex('#ff9d00').bold('visitor') +
     '@' +
     chalk.hex('#05ce91').bold('me.toinfinite.dev') +
     ':~$ ';
 
+runCommand('welcome');
+
 const askQuestion = async (): Promise<void> => {
-    const commandLine = input(handler, '');
+    const commandLine = await input(handler);
 
     const commandParts = commandLine?.match(/\b\w+\b/g);
     const commandName = commandParts?.[0];
     const commandArgs = commandParts?.slice(1);
 
-    if (
-        commandName === 'exit' ||
-        commandName === null ||
-        commandName === undefined
-    ) {
+    if (commandName === 'exit' || commandName === undefined) {
         console.log(chalk.redBright('\nHasta la vista.\n'));
-        return;
+
+        return rl.close();
     } else if (commandName.trim() === '') {
         console.log(`'${commandName.trim()}'`);
         return askQuestion();

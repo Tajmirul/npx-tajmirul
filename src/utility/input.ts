@@ -1,26 +1,32 @@
-import prompt, { AutocompleteBehavior, Key } from 'prompt-sync-plus';
-import promptHistory from 'prompt-sync-history';
+import * as readline from 'readline';
+import fs from 'fs';
+import chalk from 'chalk';
 import { commands } from './commands';
 
-function autoComplete(command: string) {
-    return commands.filter((command) => command.indexOf(command) === 0);
-}
+export const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+});
 
-const config = {
-    autocomplete: {
-        behavior: AutocompleteBehavior.SUGGEST,
-        fill: false,
-        searchFn: autoComplete,
-        sticky: false,
-        suggestColCount: 10,
-        triggerKey: Key.TAB,
-    },
-    defaultResponse: '',
-    echo: undefined,
-    eot: false,
-    history: promptHistory(),
-    sigint: false,
+// process.stdin.on('keypress', (c, k) => {
+//     if (k.name === 'tab') {
+//         const suggestions = commands.filter((command) =>
+//             command.startsWith(k.sequence),
+//         );
+
+//         console.log(suggestions.join('\t'));
+//     }
+// });
+
+rl.on('SIGINT', () => {
+    console.log(chalk.redBright('\n\nHasta la vista.\n'));
+    rl.close();
+});
+
+export const input = (question: string): Promise<string> => {
+    return new Promise((resolve) => {
+        rl.question(question, (answer) => {
+            resolve(answer);
+        });
+    });
 };
-
-// @ts-ignore
-export const input = prompt(config);

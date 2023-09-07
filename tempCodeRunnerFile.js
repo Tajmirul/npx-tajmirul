@@ -1,0 +1,1 @@
+const rl = readline.createInterface({ input, output });
