@@ -13,6 +13,7 @@ import path from 'path';
 import ora from 'ora';
 import cliSpinners from 'cli-spinners';
 import { CLIENT_RENEG_LIMIT } from 'tls';
+import axios from 'axios';
 
 const prompt = inquirer.createPromptModule();
 
@@ -40,21 +41,12 @@ const questions = [
             {
                 name: `Download my ${chalk.magentaBright.bold("Resume")}?`,
                 value: () => {
-                    const resumeLink = 'https://me-back.toinfinite.dev/public/uploads/1675714840082-resume-tajmirul-react.pdf'
-                    const resumeFileName = 'resume-tajmirul-frontend_developer'
-                    
-                    // cliSpinners.dots;
-                    const loader = ora({
-                        text: ' Downloading Resume',
-                        spinner: cliSpinners.dots,
-                    }).start();
-                    let pipe = request(resumeLink).pipe(fs.createWriteStream(`./${resumeFileName}.pdf`));
-                    pipe.on("finish", function () {
-                        let downloadPath = path.join(process.cwd(), `${resumeFileName}.pdf`)
-                        console.log(`\nResume Downloaded at ${downloadPath} \n`);
-                        open(downloadPath)
-                        loader.stop();
-                    });
+                    axios.get('https://me-back.toinfinite.dev/general-data').then(res => {
+                        const resume = `https://me-back.toinfinite.dev/${res.data.generalData[0].resume}`
+
+                        console.log(`\nResume Link: ${resume}\n`)
+                        open(resume)
+                    })
                 }
             },
             {
