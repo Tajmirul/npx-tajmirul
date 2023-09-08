@@ -4,7 +4,7 @@
     "description": "A personal card for tajmirul (@tajmirul)",
     "main": "build/index.js",
     "bin": {
-        "tajmirul": "node build/index.js"
+        "tajmirul": "build/index.js"
     },
     "repository": {
         "type": "git",
@@ -12,7 +12,7 @@
     },
     "scripts": {
         "dev": "npx ts-node ./src/index.ts",
-        "start": "node build/index.js",
+        "tajmirul": "node build/index.js",
         "build": "rimraf ./build && tsc"
     },
     "dependencies": {
