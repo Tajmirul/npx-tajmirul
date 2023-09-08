@@ -4,7 +4,7 @@
     "description": "A personal card for tajmirul (@tajmirul)",
     "main": "build/index.js",
     "bin": {
-        "tajmirul": "node ./build/index.js"
+        "tajmirul": "./build/index.js"
     },
     "repository": {
         "type": "git",
