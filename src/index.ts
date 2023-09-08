@@ -95,7 +95,6 @@ process.stdin.on('keypress', (c, k) => {
         const input = rl.line.trim();
         rl.write(null, { ctrl: true, name: 'u' });
         rl.write(input);
-        // return askQuestion();
     }
 });
 
