@@ -17,12 +17,6 @@ const runCommand = async (
     await commandDetail.action(args);
 };
 
-// export const handler =
-//     chalk.hex('#ff9d00').bold('visitor') +
-//     '@' +
-//     chalk.hex('#05ce91').bold('me.toinfinite.dev') +
-//     ':~$ ';
-
 const handler =
     '┌ ' +
     chalk.greenBright('@Visitor') +
@@ -32,7 +26,6 @@ const handler =
     chalk.blueBright(')') +
     '\n' +
     '└ $ ';
-
 
 runCommand('welcome');
 
