@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import chalk from 'chalk';
 import { commandDetails, commandHistory, commands } from './utility/commands';
 import { input, rl } from './utility/input';
