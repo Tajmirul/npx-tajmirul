@@ -38,7 +38,6 @@ const processCommand = async (commandLine: string): Promise<void> => {
         return await askQuestion();
     } else if (commandName === 'exit') {
         console.log(chalk.redBright('\nHasta la vista.\n'));
-
         return rl.close();
     }
 
