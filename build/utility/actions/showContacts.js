@@ -1,0 +1,44 @@
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.showContacts = exports.getGeneralData = void 0;
+const chalk_1 = __importDefault(require("chalk"));
+const axios_1 = require("../axios");
+let generalData;
+const getGeneralData = () => __awaiter(void 0, void 0, void 0, function* () {
+    if (generalData) {
+        return generalData;
+    }
+    const res = yield axios_1.localAxios.get('/general-data');
+    generalData = res.data.generalData[0];
+    return generalData;
+});
+exports.getGeneralData = getGeneralData;
+const showContacts = () => __awaiter(void 0, void 0, void 0, function* () {
+    const generalData = yield (0, exports.getGeneralData)();
+    const contacts = generalData.contact;
+    const contactText = [
+        ``,
+        `Email: ${chalk_1.default.bold(contacts.email)}`,
+        `Phone: ${contacts.phone}`,
+        ``,
+        `Social Media:`,
+        ...contacts.socialMedia.map((socialMedia) => {
+            return `-  ${socialMedia.name}: ${socialMedia.link}`;
+        }),
+        ``,
+    ].join('\n');
+    console.log(contactText);
+});
+exports.showContacts = showContacts;

@@ -2,34 +2,24 @@
     "name": "tajmirul",
     "version": "2.2.0",
     "description": "A personal card for tajmirul (@tajmirul)",
-    "main": "cli.js",
+    "main": "build/index.js",
     "bin": {
-        "tajmirul": "cli.js"
+        "tajmirul": "build/index.js"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/tajmirul/npx_card.git"
     },
     "scripts": {
-        "test": "node cli2.js",
-        "dev": "npx ts-node --esm ./src/index.ts",
-        "start": "npm run build && node build/index.js",
+        "dev": "npx ts-node ./src/index.ts",
+        "start": "node build/index.js",
         "build": "rimraf ./build && tsc"
     },
     "dependencies": {
-        "@inquirer/prompts": "^3.0.4",
-        "ascii-art": "^2.8.5",
         "axios": "^1.5.0",
-        "boxen": "^4.2.0",
         "chalk": "^4.1.0",
-        "clear": "^0.1.0",
-        "cli-spinners": "^2.5.0",
-        "inquirer": "^7.3.2",
         "open": "^7.0.4",
-        "ora": "^5.1.0",
-        "prompt-sync-history": "^1.0.1",
-        "prompt-sync-plus": "^1.0.2",
-        "winston": "^3.10.0"
+        "ora": "^5.1.0"
     },
     "keywords": [
         "card",

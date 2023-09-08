@@ -1,11 +1,13 @@
 import chalk from 'chalk';
 import { Commands } from '../types/commands';
 import { Resume } from '../types/resume';
-import art from 'ascii-art';
 import { getResume } from './actions/getResume';
 import open from 'open';
-import { dateFormatter } from './dateFormatter';
 import { printResume } from './printResume';
+import { getProjects, showProjects } from './actions/showProjects';
+import { getGeneralData, showContacts } from './actions/showContacts';
+import { BACKEND, FRONTEND } from './variables';
+import ora from 'ora';
 
 export const commands: Commands[] = [
     'welcome',
@@ -136,8 +138,8 @@ export const commandDetails: {
         usage: 'gui',
         example: 'gui',
         action: async () => {
-            open('https://me.toinfinite.dev');
-            console.log('Visit my website at https://me.toinfinite.dev');
+            open(FRONTEND);
+            console.log(`Visit my website at ${FRONTEND}`);
         },
     },
     about: {
@@ -160,7 +162,7 @@ export const commandDetails: {
                 `using HTML, CSS, JavaScript, and more. You can `,
                 `check out my portfolio to see some of my work. `,
                 ``,
-                `Let's connect on GitHub or LinkedIn!`,
+                `Let's talk!`,
             ].join('\n');
 
             console.log(aboutText);
@@ -197,7 +199,21 @@ export const commandDetails: {
         usage: 'skills',
         example: 'skills',
         action: async () => {
-            console.log('print skills');
+            console.log('\nMy Skills:');
+            console.log(
+                `Languages: HTML, JavaScript, ${chalk.blueBright.bold(
+                    'TypeScript',
+                )}`,
+            );
+            console.log(
+                `Frameworks: React, ${chalk.blueBright.bold(
+                    'Next',
+                )}, Tailwind Css, SASS`,
+            );
+            console.log(
+                `Others: ${chalk.blueBright.bold('Node')}, Express, MongoDB`,
+            );
+            console.log(`Tools: Git, GitHub, Figma`);
         },
     },
     projects: {
@@ -205,7 +221,8 @@ export const commandDetails: {
         usage: 'projects',
         example: 'projects',
         action: async () => {
-            console.log('print projects');
+            const projects = await getProjects();
+            showProjects(projects!);
         },
     },
     contact: {
@@ -213,7 +230,7 @@ export const commandDetails: {
         usage: 'contact',
         example: 'contact',
         action: async () => {
-            console.log('print contact information');
+            await showContacts();
         },
     },
     email: {
@@ -221,11 +238,17 @@ export const commandDetails: {
         usage: 'email',
         example: 'email',
         action: async () => {
+            const spinner = ora('Opening email client...\n\n').start();
+
+            const generalData = await getGeneralData();
             open(
-                'https://mail.google.com/mail/?view=cm&fs=1&to=tasmirolislam@gmail.com&body=Dear+Tajmirul+Islam,',
+                `https://mail.google.com/mail/?view=cm&fs=1&to=${generalData.contact.email}&body=Dear+Tajmirul+Islam,`,
             );
-            console.log('tasmirolislam@gmail.com');
+            console.log(generalData.contact.email);
             console.log('\nDone, see you soon at inbox.\n');
+
+            spinner.stop();
+            spinner.clear();
         },
     },
     resume: {
@@ -233,7 +256,17 @@ export const commandDetails: {
         usage: 'resume',
         example: 'resume',
         action: async () => {
-            console.log('open resume');
+            const spinner = ora('Opening resume ...').start();
+            const generalData = await getGeneralData();
+            const resume = BACKEND + '/' + generalData.resume;
+
+            open(resume);
+
+            spinner.stop();
+            spinner.clear();
+
+            console.log("\nIf didn't open, CTRL + click here: ");
+            console.log(resume);
         },
     },
 };

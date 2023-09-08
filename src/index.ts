@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { commandDetails, commandHistory } from './utility/commands';
+import { commandDetails, commandHistory, commands } from './utility/commands';
 import { input, rl } from './utility/input';
 
 console.clear();
@@ -27,9 +27,7 @@ export const handler =
 
 runCommand('welcome');
 
-const askQuestion = async (): Promise<void> => {
-    const commandLine = await input(handler);
-
+const processCommand = async (commandLine: string): Promise<void> => {
     const commandParts = commandLine?.match(/\b\w+\b/g);
     const commandName = commandParts?.[0];
     const commandArgs = commandParts?.slice(1);
@@ -64,5 +62,31 @@ const askQuestion = async (): Promise<void> => {
     console.log();
     askQuestion();
 };
+
+const askQuestion = () => {
+    input(handler, (answer) => {
+        processCommand(answer);
+    });
+};
+
+// show suggestions
+process.stdin.on('keypress', (c, k) => {
+    if (k.name === 'tab') {
+        // if (k.sequence === '\t') {
+        //     return;
+        // }
+
+        console.log(`\n\nSuggestions:`);
+        const suggestions = [
+            ...commands.filter((command) => command.startsWith(rl.line.trim())),
+        ].join('  ');
+
+        console.log(suggestions + '\n');
+
+        process.stdout.write(handler);
+        rl.write(rl.line.trim());
+        // return askQuestion();
+    }
+});
 
 askQuestion();

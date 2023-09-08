@@ -15,7 +15,7 @@ export const printResume = (resume: Resume) => {
         chalk.whiteBright.bold(resume.organization),
         duration,
         resume.description,
-        ``,
     ].join('\n');
-    console.log(text);
+    console.log(chalk.hex('#aaa')(text));
+    console.log(chalk.hex('#aaa')('==========='));
 };

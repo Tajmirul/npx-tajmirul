@@ -1,6 +1,5 @@
 import { Resume } from '../../types/resume';
 import { localAxios } from '../axios';
-import { logger } from '../logger';
 
 let resume: Resume[] = [];
 
