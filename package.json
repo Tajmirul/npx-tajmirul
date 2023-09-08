@@ -32,11 +32,7 @@
     "author": "Tajmirul <tasmirolislam@gmail.com> (https://me.toinfinite.dev/)",
     "license": "ISC",
     "devDependencies": {
-        "@types/ascii-art": "^1.4.0",
-        "@types/inquirer": "^9.0.3",
         "@types/node": "^20.5.9",
-        "@types/prompt-sync": "^4.2.0",
-        "@types/prompt-sync-history": "^1.0.1",
         "nodemon": "^3.0.1",
         "rimraf": "^5.0.1",
         "ts-node": "^10.9.1",
