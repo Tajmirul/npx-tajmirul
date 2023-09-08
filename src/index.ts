@@ -17,13 +17,22 @@ const runCommand = async (
     await commandDetail.action(args);
 };
 
-export const handler =
-    chalk.hex('#ff9d00').bold('visitor') +
-    '@' +
-    chalk.hex('#05ce91').bold('me.toinfinite.dev') +
-    ':~$ ';
+// export const handler =
+//     chalk.hex('#ff9d00').bold('visitor') +
+//     '@' +
+//     chalk.hex('#05ce91').bold('me.toinfinite.dev') +
+//     ':~$ ';
 
-// const handler = '|-' + chalk.hex('#ff9d00').bold('visitor') + '\n' + '|-:~$ ';
+const handler =
+    '┌ ' +
+    chalk.greenBright('@Visitor') +
+    ' ➜  ' +
+    chalk.blueBright('me.toinfinite.dev (') +
+    chalk.redBright('master') +
+    chalk.blueBright(')') +
+    '\n' +
+    '└ $ ';
+
 
 runCommand('welcome');
 
