@@ -4,6 +4,8 @@ import { Resume } from '../types/resume';
 import art from 'ascii-art';
 import { getResume } from './actions/getResume';
 import open from 'open';
+import { dateFormatter } from './dateFormatter';
+import { printResume } from './printResume';
 
 export const commands: Commands[] = [
     'welcome',
@@ -30,7 +32,7 @@ export const commandDetails: {
         description: string;
         usage: string;
         example: string;
-        action?: (arg?: string[]) => void;
+        action?: (arg?: string[]) => Promise<void>;
     };
 } = {
     welcome: {
@@ -39,14 +41,8 @@ export const commandDetails: {
         example: 'welcome',
         action: async () => {
             const name = `
-            _______    _           _            _   _____     _                 
-            |__   __|  (_)         (_)          | | |_   _|   | |                
-               | | __ _ _ _ __ ___  _ _ __ _   _| |   | |  ___| | __ _ _ __ ___  
-               | |/ _" | | '_ ' _ \| | '__| | | | |   | | / __| |/ _' | '_ ' _ \ 
-               | | (_| | | | | | | | | |  | |_| | |  _| |_\__ \ | (_| | | | | | |
-               |_|\__,_| |_| |_| |_|_|_|   \__,_|_| |_____|___/_|\__,_|_| |_| |_|
-                      _/ |                                                       
-                     |__/                                                        
+▀█▀ ▄▀█ ░░█ █▀▄▀█ █ █▀█ █░█ █░░   █ █▀ █░░ ▄▀█ █▀▄▀█
+░█░ █▀█ █▄█ █░▀░█ █ █▀▄ █▄█ █▄▄   █ ▄█ █▄▄ █▀█ █░▀░█
             `;
             console.log(name);
             const text = [
@@ -54,6 +50,7 @@ export const commandDetails: {
                 `For a list of available commands type ${chalk.greenBright.bold(
                     'help',
                 )}`,
+                ``,
             ].join('\n');
 
             console.log(text);
@@ -149,6 +146,7 @@ export const commandDetails: {
         example: 'about',
         action: async () => {
             const aboutText = [
+                ``,
                 `I'm ${chalk.greenBright.bold(
                     'Tajmirul Islam',
                 )}, a ${chalk.bold('Front End Developer')} from `,
@@ -174,9 +172,11 @@ export const commandDetails: {
         example: 'education',
         action: async () => {
             const allResumes = await getResume();
-            const education = allResumes.filter(
-                (item: Resume) => item.category === 'education',
-            );
+            allResumes?.forEach((item: Resume) => {
+                if (item.category === 'education') {
+                    printResume(item);
+                }
+            });
         },
     },
     experience: {
@@ -185,7 +185,11 @@ export const commandDetails: {
         example: 'experience',
         action: async () => {
             const resume = await getResume();
-            return resume.filter((item: Resume) => item.category === 'work');
+            resume.forEach((item: Resume) => {
+                if (item.category === 'work') {
+                    printResume(item);
+                }
+            });
         },
     },
     skills: {

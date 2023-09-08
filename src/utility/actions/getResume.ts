@@ -10,7 +10,6 @@ export const getResume = async () => {
     }
 
     const res = await localAxios.get('/resume');
-    logger.debug('fetching resume');
-    resume = res.data.resume;
+    resume = res.data.resumes;
     return resume;
 };

@@ -23,9 +23,13 @@ rl.on('SIGINT', () => {
     rl.close();
 });
 
-export const input = (question: string): Promise<string> => {
+export const input = (
+    question: string,
+    cb?: (answer: string) => void,
+): Promise<string> => {
     return new Promise((resolve) => {
         rl.question(question, (answer) => {
+            cb?.(answer);
             resolve(answer);
         });
     });

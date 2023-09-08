@@ -23,6 +23,8 @@ export const handler =
     chalk.hex('#05ce91').bold('me.toinfinite.dev') +
     ':~$ ';
 
+// const handler = '|-' + chalk.hex('#ff9d00').bold('visitor') + '\n' + '|-:~$ ';
+
 runCommand('welcome');
 
 const askQuestion = async (): Promise<void> => {
@@ -32,13 +34,12 @@ const askQuestion = async (): Promise<void> => {
     const commandName = commandParts?.[0];
     const commandArgs = commandParts?.slice(1);
 
-    if (commandName === 'exit' || commandName === undefined) {
+    if (commandName === undefined || commandName?.trim() === '') {
+        return await askQuestion();
+    } else if (commandName === 'exit') {
         console.log(chalk.redBright('\nHasta la vista.\n'));
 
         return rl.close();
-    } else if (commandName.trim() === '') {
-        console.log(`'${commandName.trim()}'`);
-        return askQuestion();
     }
 
     if (!commandDetails[commandName as keyof typeof commandDetails]) {
@@ -49,10 +50,10 @@ const askQuestion = async (): Promise<void> => {
                 )} not found. Try ${chalk.whiteBright('help')}.\n`,
             ),
         );
-        return askQuestion();
+        return await askQuestion();
     }
 
-    runCommand(commandName as keyof typeof commandDetails, commandArgs);
+    await runCommand(commandName as keyof typeof commandDetails, commandArgs);
 
     // save command history
     commandHistory.push(commandLine);
