@@ -53,6 +53,11 @@ export const commandDetails: {
                     'help',
                 )}`,
                 ``,
+                // please don't claim this as your own
+                // I would appreciate a star on the repo instead
+                // a simple request to keep the mark
+                `Developed by ${chalk.greenBright.bold('Tajmirul Islam')}`,
+                ``,
             ].join('\n');
 
             console.log(text);
@@ -76,11 +81,9 @@ export const commandDetails: {
                     const commandDetail =
                         commandDetails[commandName as Commands];
 
-                    return `${chalk
-                        .hex('#05ce91')
-                        .bold(commandName)} ${generateSpaces(commandName)} - ${
-                        commandDetail.description
-                    }`;
+                    return `${chalk.greenBright(commandName)} ${generateSpaces(
+                        commandName,
+                    )} - ${commandDetail.description}`;
                 })
                 .join('\n');
 

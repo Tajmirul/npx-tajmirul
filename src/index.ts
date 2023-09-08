@@ -75,19 +75,26 @@ const askQuestion = () => {
 // show suggestions
 process.stdin.on('keypress', (c, k) => {
     if (k.name === 'tab') {
-        // if (k.sequence === '\t') {
-        //     return;
-        // }
+        const suggestions = commands.filter((command) =>
+            command.startsWith(rl.line.trim()),
+        );
+
+        if (suggestions.length === 0) {
+            return;
+        }
+        if (suggestions.length === 1) {
+            rl.write(null, { ctrl: true, name: 'u' });
+            rl.write(suggestions[0]);
+            return;
+        }
 
         console.log(`\n\nSuggestions:`);
-        const suggestions = [
-            ...commands.filter((command) => command.startsWith(rl.line.trim())),
-        ].join('  ');
+        console.log(suggestions.join('  ') + '\n');
 
-        console.log(suggestions + '\n');
-
-        process.stdout.write(handler);
-        rl.write(rl.line.trim());
+        process.stdout.write(handler + rl.line.trim());
+        const input = rl.line.trim();
+        rl.write(null, { ctrl: true, name: 'u' });
+        rl.write(input);
         // return askQuestion();
     }
 });
