@@ -10,21 +10,21 @@ import { BACKEND, FRONTEND } from './variables';
 import ora from 'ora';
 
 export const commands: Commands[] = [
-    'welcome',
-    'help',
-    'exit',
-    'clear',
-    'echo',
-    'whoami',
-    'gui',
     'about',
-    'education',
-    'experience',
-    'skills',
-    'projects',
+    'clear',
     'contact',
+    'echo',
+    'education',
     'email',
+    'exit',
+    'experience',
+    'gui',
+    'help',
+    'projects',
     'resume',
+    'skills',
+    'welcome',
+    'whoami',
 ];
 
 export const commandHistory: string[] = [];
@@ -76,13 +76,12 @@ export const commandDetails: {
                 return ' '.repeat(longestCommand.length - command.length);
             };
 
-            const commandsWithHelpText = Object.keys(commandDetails)
-                .map((commandName) => {
-                    const commandDetail =
-                        commandDetails[commandName as Commands];
+            const commandsWithHelpText = commands
+                .map((command) => {
+                    const commandDetail = commandDetails[command];
 
-                    return `${chalk.greenBright(commandName)} ${generateSpaces(
-                        commandName,
+                    return `${chalk.greenBright(command)} ${generateSpaces(
+                        command,
                     )} - ${commandDetail.description}`;
                 })
                 .join('\n');
