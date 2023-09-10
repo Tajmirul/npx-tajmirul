@@ -1,6 +1,6 @@
 {
     "name": "tajmirul",
-    "version": "3.2.1",
+    "version": "3.2.2",
     "description": "A personal card for tajmirul (@tajmirul)",
     "main": "build/index.js",
     "bin": {
