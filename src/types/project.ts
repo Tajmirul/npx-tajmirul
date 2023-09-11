@@ -4,11 +4,11 @@ export interface Pagination {
 }
 
 export interface Project {
-    liveUrl: string;
-    sourceCode: string;
+    liveUrl?: string;
+    sourceCode?: string;
     technologies: string[];
     _id: string;
-    features: string[];
+    features?: string[];
     slug: string;
     title: string;
     image: string;
