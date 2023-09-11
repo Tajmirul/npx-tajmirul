@@ -6,9 +6,11 @@ import { generalDataDB } from '../../resource/generalData';
 let generalData: GeneralData;
 
 export const getGeneralData = async (): Promise<GeneralData> => {
-    return new Promise((resolve, reject) => {
-        resolve(generalDataDB);
-    });
+    // return new Promise((resolve, reject) => {
+    //     resolve(generalDataDB);
+    // });
+
+    return generalDataDB;
 
     if (generalData) {
         return generalData;
