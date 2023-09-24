@@ -260,7 +260,7 @@ export const commandDetails: {
         action: async () => {
             const spinner = ora('Opening resume ...').start();
             const generalData = await getGeneralData();
-            const resume = BACKEND + '/' + generalData.resume;
+            const resume = generalData.resume;
 
             open(resume);
 

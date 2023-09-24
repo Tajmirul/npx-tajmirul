@@ -2,7 +2,7 @@ import { GeneralData } from '../types/generalData';
 
 export const generalDataDB: GeneralData = {
     _id: '613607fe7844bb1a44b6dc6b',
-    resume: 'public/uploads/1693833021749-resume-tajmirul-react.pdf',
+    resume: 'https://docs.google.com/document/d/19tEVhfN1wZDN2qWgrd75Z9OGTMGsBjS-CrCH57zpskU/edit?usp=sharing',
     banner: {
         header: 'Tajmriul Islam Akhand',
         description:
